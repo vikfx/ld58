@@ -68,10 +68,10 @@
     "levels" : [
         {
             "planets" : {
-                "M" : 20,
-                "J" : 30
+                "M" : 50,
+                "J" : 40
             },
-            "cosmos" : {"width" : 800, "height" : 800},
+            "cosmos" : {"width" : 1800, "height" : 1800},
             "album" : ["M", "M", "J"]
         }
     ]
