@@ -1,22 +1,34 @@
 {
     "planets" : [
         {
-            "class" : "M",
-            "water" : "liquid",
-            "chemicals" : "carbon",
-            "atmosphere" : "oxygen",
-            "star" : "naine",
-            "density" : "medium", 
-            "size" : "medium"
+            "type" : "M",
+            "attributes" : {
+                "water" : "liquid",
+                "chemicals" : "carbon",
+                "atmosphere" : "oxygen",
+                "star" : "naine",
+                "density" : "medium", 
+                "size" : "medium"
+            },
+            "models" : [
+                "./planetM1.png",
+                "./planetM2.png"
+            ]
         },
         {
-            "class" : "J",
-            "water" : "gas",
-            "chemicals" : "azote",
-            "atmosphere" : "azote",
-            "star" : "naine",
-            "density" : "low", 
-            "size" : "big"
+            "type" : "J",
+            "attributes" : {
+                "water" : "gas",
+                "chemicals" : "azote",
+                "atmosphere" : "azote",
+                "star" : "naine",
+                "density" : "low", 
+                "size" : "big"
+            },
+            "models" : [
+                "./planetJ1.png",
+                "./planetJ2.png"
+            ]
         }
     ],
     "filters" : {
@@ -55,7 +67,10 @@
     },
     "levels" : [
         {
-            "planets" : 100,
+            "planets" : {
+                "M" : 20,
+                "J" : 30
+            },
             "cosmos" : {"width" : 800, "height" : 800},
             "album" : ["M", "M", "J"]
         }

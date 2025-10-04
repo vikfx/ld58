@@ -16,6 +16,7 @@
 	--color-accent4:#B3DEC9;
 	--color-accent5:#4C8D8F;
 	--color-accent6:#2f4f4f;
+    --color-cosmos: #000000;
 	
 	--button-border: solid 2px #786858;
 	--button-padding: 5px;
@@ -155,9 +156,8 @@ MAIN
     left: 0;
 }
 
-#main-content canvas:not(.on) {
-	/* display: none; */
-	visibility: hidden;
+#cosmos {
+    background-color: var(--color-cosmos);
 }
 
 /***** infobar *****/
@@ -170,6 +170,7 @@ MAIN
     padding: var(--padding-large);
     background-color: var(--color-accent4);
     justify-content: space-between;
+    z-index : 100
 }
 
 #infobar ul {
