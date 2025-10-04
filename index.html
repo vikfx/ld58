@@ -1,0 +1,63 @@
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Star Fleet Collector</title>
+<link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+	<header id="main-header">
+		<h1>Star Fleet Collector</h1>
+		<a href="#help" title="help">help</a>
+	</header>
+	
+	<div id="page">
+		<!-- SIDEBAR -->
+		<aside id="sidebar">
+			<header>
+				<h2 id="current-level"></h2>
+				<nav id="tabs-nav">
+					<a href="#album">album</a>
+					<a href="#dictionnary">dictionnary</a>
+					<a href="#legend">filter</a>
+				</nav>
+			</header>
+			<section id="tabs">
+				<div id="album" class="tab"></div>
+				<div id="dictionnary" class="tab"></div>
+				<div id="filters" class="tab"></div>
+			</section>
+		</aside>
+
+		<!-- MAIN -->
+		<main id="main-content">
+			<div id="infobar">
+				<ul id="tools">
+					<li id="filters">filters</li>
+					<li id="zoom">zoom</li>
+					<li id="pics">take a picture</li>
+				</ul>
+				<ul id="coordonnees">
+					<li id="pos-x">x 0000</li>
+					<li id="pos-y">y 0000</li>
+				</ul>
+			</div>
+	
+			<canvas id="cosmos" class="on"></canvas>
+			<canvas id="telescop"></canvas>
+			<div id="help" class="modal"></div>
+			<form id="picture" class="modal">
+				<img src="">
+				<input type="text" name="planet-name" placeholder="name of the planet">
+			</form>
+		</main>
+	</div>
+
+
+	<footer id="main-footer">
+		A Game by <a href="https://vikfx.com" target="_blank">VIK·FX</a> | #LD58
+	</footer>
+
+	<script type="module" src="./js/main.js"></script>
+</body>
+</html>
