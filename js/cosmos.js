@@ -90,7 +90,7 @@ export class Cosmos {
 	planetsGeneration(planets) {
 		this.planets = []
 
-		this.planets.push(new Planet({x : 50, y : 50}, 'M', 50, ''))
+		//this.planets.push(new Planet({x : 50, y : 50}, 'M', 50, ''))
 		for(let p in planets) {
 			const ref = Glossary.instance.getReference(p)
 			for(let i = 0; i < planets[p]; i++) {

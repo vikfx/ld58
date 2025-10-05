@@ -12,7 +12,12 @@
             },
             "models" : [
                 "./images/planetM1.png",
-                "./images/planetM2.png"
+                "./images/planetM2.png",
+                "./images/planetM3.png",
+                "./images/planetM4.png",
+                "./images/planetM5.png",
+                "./images/planetM6.png",
+                "./images/planetM7.png"
             ]
         },
         {
@@ -27,7 +32,10 @@
             },
             "models" : [
                 "./images/planetJ1.png",
-                "./images/planetJ2.png"
+                "./images/planetJ2.png",
+                "./images/planetJ3.png",
+                "./images/planetJ4.png",
+                "./images/planetJ5.png"
             ]
         },
         {
@@ -42,7 +50,39 @@
             },
             "models" : [
                 "./images/planetR1.png",
-                "./images/planetR2.png"
+                "./images/planetR2.png",
+                "./images/planetR3.png"
+            ]
+        },
+        {
+            "type" : "T",
+            "attributes" : {
+                "water" : "liquid",
+                "ground" : "sulfur",
+                "atmosphere" : "azote",
+                "star" : "naine",
+                "density" : "low", 
+                "size" : "small"
+            },
+            "models" : [
+                "./images/planetT1.png",
+                "./images/planetT2.png",
+                "./images/planetT3.png"
+            ]
+        },
+        {
+            "type" : "H",
+            "attributes" : {
+                "water" : "solid",
+                "ground" : "carbon",
+                "atmosphere" : "none",
+                "star" : "giant",
+                "density" : "medium", 
+                "size" : "medium"
+            },
+            "models" : [
+                "./images/planetH1.png",
+                "./images/planetH2.png"
             ]
         }
     ],
@@ -52,8 +92,8 @@
             "button" : "./images/filterWater.png",
             "params" : {
                 "liquid" : "#00cccc",
-                "solid" : "#ccffff",
-                "gas" : "#ffffff",
+                "solid" : "#105ecd",
+                "gas" : "#FFEB3B",
                 "none" : "#cccccc"
             }
         },
@@ -63,7 +103,7 @@
             "params" : {
                 "azote" : "#00ff22",
                 "carbon" : "#666666",
-                "sulfur" : "#aaaa00"
+                "sulfur" : "#FF9800"
             }
         },
         {
@@ -110,30 +150,36 @@
             "planets" : {
                 "M" : 80,
                 "J" : 60,
-                "R" : 50
+                "R" : 50,
+                "T" : 30,
+                "H" : 50
             },
             "cosmos" : {"width" : 1800, "height" : 1800},
-            "album" : ["M", "M", "J", "M", "R", "J"]
+            "album" : {"M" : 5, "J" : 3, "R" : 2, "T" : 2}
         },
         {
             "name" : "normal",
             "planets" : {
                 "M" : 100,
                 "J" : 150,
-                "R" : 50
+                "R" : 50,
+                "T" : 50,
+                "H" : 20
             },
             "cosmos" : {"width" : 3000, "height" : 3000},
-            "album" : ["M", "M", "J", "M", "R", "M", "M", "J", "R", "R", "M", "J"]
+            "album" : {"M" : 8, "J" : 10, "R" : 4, "T" : 7, "H" : 1}
         },
         {
             "name" : "hard",
             "planets" : {
                 "M" : 50,
                 "J" : 200,
-                "R" : 600
+                "R" : 600,
+                "T" : 200,
+                "H" : 50
             },
             "cosmos" : {"width" : 3000, "height" : 3000},
-            "album" : ["M", "M", "J", "M", "R", "M", "J", "M", "J", "J", "R"]
+            "album" : {"M" : 10, "J" : 30, "R" : 10, "T" : 10, "H" : 6}
         }
     ]
 }

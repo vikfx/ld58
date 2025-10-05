@@ -17,23 +17,42 @@ export class Album {
 			$ul.firstChild.remove()
 		}
 
-		this.album.forEach(p => {
-			const $li = document.createElement('li')
-			$li.classList.add('box')
-			$li.dataset.type = p
-			$li.dataset.planet = ''
-			$li.addEventListener('click', evt => {
-				console.log('todo show planet')
-			})
-			
-			const $img = document.createElement('img')
-			const $h = document.createElement('h4')
-			$h.innerHTML = '...'
+		for(let p in this.album) {
+			for(let i = 0; i < this.album[p]; i++) {
+				const $li = document.createElement('li')
+				$li.classList.add('box')
+				$li.dataset.type = p
+				$li.dataset.planet = ''
+				$li.addEventListener('click', evt => {
+					console.log('todo show planet')
+				})
 
-			$li.appendChild($img)
-			$li.appendChild($h)
-			$ul.appendChild($li)
-		});
+				const $img = document.createElement('img')
+				const $h = document.createElement('h4')
+				$h.innerHTML = '...'
+
+				$li.appendChild($img)
+				$li.appendChild($h)
+				$ul.appendChild($li)
+			}
+		}
+		// this.album.forEach(p => {
+		// 	const $li = document.createElement('li')
+		// 	$li.classList.add('box')
+		// 	$li.dataset.type = p
+		// 	$li.dataset.planet = ''
+		// 	$li.addEventListener('click', evt => {
+		// 		console.log('todo show planet')
+		// 	})
+			
+		// 	const $img = document.createElement('img')
+		// 	const $h = document.createElement('h4')
+		// 	$h.innerHTML = '...'
+
+		// 	$li.appendChild($img)
+		// 	$li.appendChild($h)
+		// 	$ul.appendChild($li)
+		// })
 	}
 
 	//update le html d'un sticker
