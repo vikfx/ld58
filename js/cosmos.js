@@ -6,7 +6,8 @@ export class Cosmos {
 	zoom = 1				//le zoom en cours
 	sizes = [1, 5]			//les limites de taille de chaque planete à zoom 1
 	planetColor = '#ffffff'	//la couleur de la planete sans filtre
-	moveSpeed = 5			//la vitesse de deplacement
+	speeds = [10, 5, 2, 1]	//vitesses de deplacements
+	speed = 5			//la vitesse de deplacement
 	offset					//offset de la camera
 	size					//les dimensions w/h du monde 
 	planets					//les planetes du cosmos
@@ -23,6 +24,7 @@ export class Cosmos {
 
 	//ajouter les ecouteurs
 	addListeners() {
+		//deplacement avec les fleches
 		window.addEventListener('keydown', evt => {
 			let dirX = 0
 			let dirY = 0
@@ -51,6 +53,15 @@ export class Cosmos {
 			this.translate(dirX, dirY)
 			this.draw()
 		})
+
+		//definir la vitesse de deplacement
+		Cosmos.$containers.speed.addEventListener('click', evt => {
+			let si = this.speeds.indexOf(this.speed)
+
+			si++
+			if(si >= this.speeds.length) si = 0
+			this.setSpeed(this.speeds[si])
+		})
 	}
 	
 	//reset un level
@@ -61,10 +72,18 @@ export class Cosmos {
 		}
 
 		this.offset = this.clampPos(0, 0)
+		this.setSpeed(this.speeds[0])
 		
 		this.planetsGeneration(level.planets)
 
 		this.draw()
+	}
+
+	//definir la vitesse de balayage
+	setSpeed(s) {	
+		this.speed = s
+
+		Cosmos.$containers.speed.innerHTML = 'speed x' + this.speed
 	}
 
 	//renvoyer une reference de planete
@@ -95,8 +114,8 @@ export class Cosmos {
 
 	//translation du cosmos dans les direction x/y
 	translate(dirX, dirY) {
-		const x = this.offset.x + dirX * this.moveSpeed
-		const y = this.offset.y + dirY * this.moveSpeed
+		const x = this.offset.x + dirX * this.speed
+		const y = this.offset.y + dirY * this.speed
 		this.offset = this.clampPos(x, y)
 
 		const detail = { offset : this.offset }
@@ -168,6 +187,7 @@ export class Cosmos {
 		ctx.clearRect(0, 0, $canvas.width, $canvas.height)
 	
 		//dessiner les planetes
+		if(!this.planets || !this.bounds) return
 		const planets = Cosmos.getPlanetsInBounds(this.planets, this.bounds)
 		planets.forEach(p => {
 			const s = p.size * this.zoom
@@ -188,9 +208,13 @@ export class Cosmos {
 	static get $containers() {
 		const $canvas = document.querySelector('#cosmos')
 		if(!$canvas) throw new Error('#cosmos canvas not found')
+		
+		const $speed = document.querySelector('#speed')
+		if(!$speed) throw new Error('#speed button not found')
 
 		return {
-			canvas : $canvas
+			canvas : $canvas,
+			speed : $speed
 		}
 	}
 

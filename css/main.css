@@ -62,11 +62,18 @@ h4 {
     height: 32px;
     box-shadow: 2px 2px 0px;
     background-color: var(--color-accent3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button:hover, .button.on {
     box-shadow: none;
     transform: translate(2px, 2px);
+}
+
+.button:hover {
+    background-color: var(--color-accent2);
 }
 
 /*****
@@ -222,7 +229,7 @@ MAIN
 }
 
 
-/***** infobar *****/
+/***** actions bar *****/
 #actions {
     position: absolute;
     top: 0;
@@ -232,12 +239,18 @@ MAIN
     padding: var(--padding-medium) var(--padding-large);
     background-color: var(--color-accent4);
     justify-content: space-between;
+    align-items: center;
     z-index : 100
 }
 
 #actions ul {
     display: flex;
     gap: var(--padding-small);
+}
+
+#position {
+    min-width: 200px;
+    text-align: right;
 }
 
 /*****

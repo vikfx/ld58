@@ -4,7 +4,7 @@ import { Cosmos } from './cosmos.js'
 export class Telescop {
 	static canvasSize = 200		//taille du canvas
 	zoom						//le zoom en cours
-	zooms = [1, 2, 5]			//les zooms possibles
+	zooms = [1, 2, 5, 10]		//les zooms possibles
 	planetColor = '#333'		//la couleur de la planete sans filtre
 	filters						//les filtres possibles
 	filter						//le filtre en cours
@@ -24,15 +24,33 @@ export class Telescop {
 	//reset du telescope
 	reset() {
 		this.filter = null
-		this.zoom = this.zooms[0]
+		this.setZoom(this.zooms[0])
 	}
 
 	//ajouter les ecouteurs
 	addListeners() {
+		//deplacement du cosmos
 		document.addEventListener('cosmosTranslate', evt => {
 			this.posToHTML()
 			this.draw()
 		})
+
+		//bouton zoom
+		Telescop.$containers.zoom.addEventListener('click', evt => {
+			let zi = this.zooms.indexOf(this.zoom)
+
+			zi++
+			if(zi >= this.zooms.length) zi = 0
+			this.setZoom(this.zooms[zi])
+		})
+	}
+
+	//definir un zoom
+	setZoom(z) {
+		this.zoom = z
+
+		Telescop.$containers.zoom.innerHTML = 'zoom x' + this.zoom
+		this.draw()
 	}
 	
 	//afficher les coordonnées dans la barre d'action
@@ -165,6 +183,7 @@ export class Telescop {
 		ctx.clearRect(0, 0, $canvas.width, $canvas.height)
 	
 		//dessiner les planetes
+		if(!this.cosmos.planets || !this.bounds) return
 		const planets = Cosmos.getPlanetsInBounds(this.cosmos.planets, this.bounds)
 		planets.forEach(p => {
 			const s = p.size * this.zoom
