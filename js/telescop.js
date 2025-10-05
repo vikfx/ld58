@@ -5,6 +5,7 @@ export class Telescop {
 	static canvasSize = 200		//taille du canvas
 	zoom						//le zoom en cours
 	zooms = [1, 2, 5]			//les zooms possibles
+	planetColor = '#333'		//la couleur de la planete sans filtre
 	filters						//les filtres possibles
 	filter						//le filtre en cours
 	cosmos						//l'instance du cosmos
@@ -31,10 +32,6 @@ export class Telescop {
 		document.addEventListener('cosmosTranslate', evt => {
 			this.posToHTML()
 			this.draw()
-			console.log('cosmos')
-			console.log(this.cosmos.bounds)
-			console.log('telescop')
-			console.log(this.bounds)
 		})
 	}
 	
@@ -49,9 +46,51 @@ export class Telescop {
 	//creer les filtres
 	initFilters(filters) {
 		this.filters = filters
-		for(let f in filters) {
-			console.log(f)
-		}
+		filters.forEach(f => {
+			this.filterBtnHTML(f)
+		})
+	}
+
+	//creation du html du bouton
+	filterBtnHTML(f) {
+		const $ul = Telescop.$containers.filters
+
+		const $li = document.createElement('li')
+		$li.classList.add('button')
+		$li.dataset.filter = f.name
+		$li.innerHTML = f.name
+		$li.style.backgroundImage = f.button
+		$li.addEventListener('click', evt => {
+			const $lis = Telescop.$containers.filters.querySelectorAll('li')
+			$lis.forEach($l => {
+				if($l == $li) {
+					$l.classList.add('on')
+					this.setFilter($l.dataset.filter)
+				} else {
+					$l.classList.remove('on')
+				}
+			})
+		})
+
+		$ul.appendChild($li)
+	}
+
+	//definir le filtre actif
+	setFilter(filterName) {
+		const filter = this.filters.find(f => f.name == filterName)
+		if(!filter) throw new Error('no filter from the name ' + filterName)
+		this.filter = filter
+
+		this.draw()
+	}
+
+	//renvoyer la couleur de la planete avec le filtre actif
+	getFilterColor(type) {
+		if(!this.filter) return this.planetColor
+		const ref = this.cosmos.getReference(type)
+		const val = ref.attributes[this.filter.name]
+
+		return this.filter.params[val]
 	}
 
 	//convertir les coordonnees pixel du canvas en position dans le telescope 
@@ -137,11 +176,11 @@ export class Telescop {
 			if(pos.y > $canvas.height) pos.y -= this.cosmos.size.h * this.zoom
 			if(pos.y < 0) pos.y += this.cosmos.size.h * this.zoom
 			
-			ctx.fillStyle = '#ffff00'
+			ctx.fillStyle = this.getFilterColor(p.type)
 			ctx.fillRect(pos.x - s / 2, pos.y - s / 2, s, s)
 		})
 	}
-	
+
 	//containers html
 	static get $containers() {
 		const $canvas = document.querySelector('#telescop canvas')

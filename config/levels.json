@@ -29,10 +29,26 @@
                 "./planetJ1.png",
                 "./planetJ2.png"
             ]
+        },
+        {
+            "type" : "R",
+            "attributes" : {
+                "water" : "none",
+                "ground" : "sulfur",
+                "atmosphere" : "argon",
+                "star" : "nova",
+                "density" : "hight", 
+                "size" : "big"
+            },
+            "models" : [
+                "./planetR1.png",
+                "./planetR2.png"
+            ]
         }
     ],
-    "filters" : {
-        "water" : {
+    "filters" : [
+        {
+            "name" : "water",
             "button" : "./filterWater.png",
             "params" : {
                 "liquid" : "#00cccc",
@@ -41,7 +57,8 @@
                 "none" : "#cccccc"
             }
         },
-        "ground" : {
+        {
+            "name" : "ground", 
             "button" : "./filterGround.png",
             "params" : {
                 "azote" : "#00ff22",
@@ -49,7 +66,8 @@
                 "sulfur" : "#aaaa00"
             }
         },
-        "atmosphere" : {
+        {
+            "name" : "atmosphere", 
             "button" : "./filterAtmos.png",
             "params" : {
                 "oxygen" : "#ff1122",
@@ -58,7 +76,8 @@
                "none" : "#cccccc"
             }
         },
-        "star" : {
+        {
+            "name" : "star",
             "button" : "./filterStar.png",
             "params" : {
                 "naine" : "#ff6600",
@@ -66,7 +85,8 @@
                 "giant" : "#ff44dd"
             }
         },
-        "density" : {
+        {
+            "name" : "density",
             "button" : "./filterDensity.png",
             "params" : {
                 "low" : "#0055dd",
@@ -74,7 +94,8 @@
                 "hight" : "ff2200"
             }
         },
-        "size" :  {
+        {
+            "name" : "size",
             "button" : "./filterSize.png",
             "params" : {
                 "small" : "#22dddd",
@@ -82,15 +103,16 @@
                 "big" : "#ccee00"
             }
         }
-    },
+    ],
     "levels" : [
         {
             "planets" : {
-                "M" : 50,
-                "J" : 40
+                "M" : 80,
+                "J" : 60,
+                "R" : 30
             },
             "cosmos" : {"width" : 1800, "height" : 1800},
-            "album" : ["M", "M", "J"]
+            "album" : ["M", "M", "J", "M", "R"]
         }
     ]
 }

@@ -18,12 +18,13 @@
 	--color-accent6:#2f4f4f;
     --color-cosmos: #000000;
 	
-	--button-border: solid 2px #786858;
+	/* --button-border: solid 2px #786858;
 	--button-padding: 5px;
-	--button-gap: 2px;
+	--button-gap: 2px; */
 
 	--padding-small : 5px;
-	--padding-large : 10px 20px;
+	--padding-medium : 10px;
+	--padding-large : 20px;
 
 	--main-height: calc(100vh - 53px);
 }
@@ -55,6 +56,19 @@ h4 {
 	font-size: 24px;
 }
 
+/***** buttons *****/
+.button {
+    width: 32px;
+    height: 32px;
+    box-shadow: 2px 2px 0px;
+    background-color: var(--color-accent3);
+}
+
+.button:hover, .button.on {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
 /*****
 HEADER
 *****/
@@ -73,7 +87,7 @@ FOOTER
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: var(--padding-large);
+    padding: var(--padding-medium) var(--padding-large);
     text-align: right;
     color: #ffffff;
 }
@@ -108,17 +122,17 @@ ASIDE
 }
 
 #sidebar > header > nav {
-	padding: var(--padding-large);
+	padding: var(--padding-medium) var(--padding-large);
 	padding-bottom: 0;
 	display: flex;
-	gap: var(--button-gap);
-	border-bottom: var(--button-border);
+	gap: var(--padding-small);
+	/* border-bottom: var(--button-border); */
 }
 
 #sidebar > header > nav > a {
 	background-color: var(--color-accent1);
-	padding: var(--button-padding);
-	margin-bottom: -2px;
+	padding: var(--padding-small);
+	/* margin-bottom: -2px; */
 	text-decoration: none;
 }
 
@@ -174,6 +188,7 @@ MAIN
     background-color: #2226;
     border: solid 2px red;
     /* border-radius: 50%; */
+    transform: translate(-2px, -2px);
 }
 
 #telescop .reticle {
@@ -214,7 +229,7 @@ MAIN
     left: 0;
     right: 0;
     display: flex;
-    padding: var(--padding-large);
+    padding: var(--padding-medium) var(--padding-large);
     background-color: var(--color-accent4);
     justify-content: space-between;
     z-index : 100
@@ -222,7 +237,7 @@ MAIN
 
 #actions ul {
     display: flex;
-    gap: var(--button-gap);
+    gap: var(--padding-small);
 }
 
 /*****
