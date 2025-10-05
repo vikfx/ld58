@@ -1,4 +1,4 @@
-import { Cosmos } from './cosmos.js'
+import { Glossary } from './glossary.js'
 import { Telescop } from './telescop.js'
 
 //les filtres avec le bouton et la legende
@@ -7,16 +7,10 @@ export class Filter {
 	src				//source de l'image
 	params			//parametres du filtre
 	cosmos			//reference du cosmos
-	telescop		//reference du telescope
 	$btn			//le bouton html
 
+	//init
 	constructor(name, src, params) {
-		this.cosmos = Cosmos.instance
-		if(!cosmos) throw new Error('cosmos must be create before telescop')
-
-		this.telescop = Telescop.instance
-		if(!telescop) throw new Error('telescop must be create before filter')
-		
 		this.name = name
 		this.src = src
 		this.params = params
@@ -42,8 +36,8 @@ export class Filter {
 
 	//creation html de la legende
 	createLegendHTML() {
-		const $lif = document.createElement('li')
-		$lif.classList.add('filter')
+		const $lib = document.createElement('li')
+		$lib.classList.add('box')
 
 		const $h = document.createElement('h3')
 		$h.innerHTML = this.name
@@ -66,14 +60,14 @@ export class Filter {
 			$ul.appendChild($li)
 		})
 
-		$lif.appendChild($h)
-		$lif.appendChild($ul)
-		Filter.$containers.legend.appendChild($lif)
+		$lib.appendChild($h)
+		$lib.appendChild($ul)
+		Filter.$containers.catalog.appendChild($lib)
 	}
 
 	//renvoyer la couleur de la planete avec le filtre actif
 	getFilterColor(type) {
-		const ref = this.cosmos.getReference(type)
+		const ref = Glossary.instance.getReference(type)
 		const val = ref.attributes[this.name]
 
 		return this.params[val]
@@ -85,15 +79,15 @@ export class Filter {
 		$lis.forEach($l => {
 			if($l == this.$btn) {
 				$l.classList.add('on')
-				this.telescop.filter = this
-				this.telescop.draw()
+				const telescop = Telescop.instance
+				telescop.filter = this
+				telescop.draw()
 			} else {
 				$l.classList.remove('on')
 			}
 		})
 	}
 
-	
 	//containers html
 	static get $containers() {
 		const $btnsContainer = document.querySelector('#filters')
@@ -101,15 +95,15 @@ export class Filter {
 
 		const $btns = $btnsContainer.querySelectorAll('li')
 
-		const $legendContainer = document.querySelector('#legend-tab > ul')
-		if(!$legendContainer) throw new Error('#legend > ul not found')
+		const $catalog = document.querySelector('#legend-tab .catalog')
+		if(!$catalog) throw new Error('#legend-tab .catalog not found')
 
 		return {
 			btns : {
 				ul : $btnsContainer,
 				lis : $btns
 			},
-			legend : $legendContainer
+			catalog : $catalog
 		}
 	}
 

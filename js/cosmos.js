@@ -1,24 +1,25 @@
+import { Glossary } from './glossary.js'
 import { Planet } from './planet.js'
 
 //classe Cosmos pour abriter les planetes
 export class Cosmos {
-	static instance
-	zoom = 1				//le zoom en cours
-	sizes = [1, 5]			//les limites de taille de chaque planete à zoom 1
-	planetColor = '#ffffff'	//la couleur de la planete sans filtre
-	speeds = [10, 5, 2, 1]	//vitesses de deplacements
-	speed = 5			//la vitesse de deplacement
-	offset					//offset de la camera
-	size					//les dimensions w/h du monde 
-	planets					//les planetes du cosmos
-	references				//les references de chaque planete
+	static instance				//singleton
+	zoom = 1					//le zoom en cours
+	sizes = [1, 5]				//les limites de taille de chaque planete à zoom 1
+	planetColor = '#ffffff'		//la couleur de la planete sans filtre
+	speeds = [10, 5, 2, 1]		//vitesses de deplacements
+	speed = 5					//la vitesse de deplacement
+	offset						//offset de la camera
+	size						//les dimensions w/h du monde
+	planets						//les planetes du cosmos
 
 	//init
 	constructor(references) {
 		if(Cosmos.instance)	return Cosmos.instance
 		Cosmos.instance = this
-		
-		this.references = references
+
+		//this.references = references
+		if(!Glossary.instance) new Glossary(references)
 		this.addListeners()
 	}
 
@@ -33,7 +34,7 @@ export class Cosmos {
 				case 'ArrowLeft' :
 					dirX ++
 					break
-				
+
 				//touche droite
 				case 'ArrowRight' :
 					dirX --
@@ -63,7 +64,7 @@ export class Cosmos {
 			this.setSpeed(this.speeds[si])
 		})
 	}
-	
+
 	//reset un level
 	loadLevel(level) {
 		this.size = {
@@ -73,24 +74,16 @@ export class Cosmos {
 
 		this.offset = this.clampPos(0, 0)
 		this.setSpeed(this.speeds[0])
-		
+
 		this.planetsGeneration(level.planets)
 
 		this.draw()
 	}
 
 	//definir la vitesse de balayage
-	setSpeed(s) {	
+	setSpeed(s) {
 		this.speed = s
-
 		Cosmos.$containers.speed.innerHTML = 'speed x' + this.speed
-	}
-
-	//renvoyer une reference de planete
-	getReference(type) {
-		const ref = this.references.find(ref => ref.type == type)
-		if(!ref) throw new Error('no reference from this type')
-		return ref
 	}
 
 	//generer des planetes
@@ -99,7 +92,7 @@ export class Cosmos {
 
 		this.planets.push(new Planet({x : 50, y : 50}, 'M', 50, ''))
 		for(let p in planets) {
-			const ref = this.getReference(p)
+			const ref = Glossary.instance.getReference(p)
 			for(let i = 0; i < planets[p]; i++) {
 				const size = this.sizes[0] + Math.random() * (this.sizes[1] - this.sizes[0])
 				const pos = {
@@ -134,7 +127,7 @@ export class Cosmos {
 	//convertir des coordonnées x/y dans le canvas en position dans le cosmos
 	pixelToGrid(x, y) {
 		return {
-			x : Math.floor(x / this.zoom) + this.offset.x, 
+			x : Math.floor(x / this.zoom) + this.offset.x,
 			y : Math.floor(y / this.zoom) + this.offset.y
 		}
 	}
@@ -146,7 +139,7 @@ export class Cosmos {
 			y : (y - this.offset.y) * this.zoom
 		}
 	}
-	
+
 	//recuperer le bounds du cosmos
 	get bounds() {
 		const $canvas = Cosmos.$containers.canvas
@@ -182,33 +175,33 @@ export class Cosmos {
 	draw() {
 		const $canvas = Cosmos.$containers.canvas
 		const ctx = $canvas.getContext('2d')
-	
+
 		//clear
 		ctx.clearRect(0, 0, $canvas.width, $canvas.height)
-	
+
 		//dessiner les planetes
 		if(!this.planets || !this.bounds) return
 		const planets = Cosmos.getPlanetsInBounds(this.planets, this.bounds)
 		planets.forEach(p => {
 			const s = p.size * this.zoom
-			
+
 			const pos = this.gridToPixel(p.position.x, p.position.y)
-			
+
 			if(pos.x > $canvas.width) pos.x -= this.size.w * this.zoom
 			if(pos.x < 0) pos.x += this.size.w * this.zoom
 			if(pos.y > $canvas.height) pos.y -= this.size.h * this.zoom
 			if(pos.y < 0) pos.y += this.size.h * this.zoom
-			
+
 			ctx.fillStyle = this.planetColor
 			ctx.fillRect(pos.x - s / 2, pos.y - s / 2, s, s)
 		})
 	}
-	
+
 	//containers html
 	static get $containers() {
 		const $canvas = document.querySelector('#cosmos')
 		if(!$canvas) throw new Error('#cosmos canvas not found')
-		
+
 		const $speed = document.querySelector('#speed')
 		if(!$speed) throw new Error('#speed button not found')
 

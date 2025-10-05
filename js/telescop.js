@@ -3,7 +3,7 @@ import { Filter } from './filter.js'
 
 //telescope avec filtre et zoom 
 export class Telescop {
-	static instance
+	static instance				//singleton
 	static canvasSize = 200		//taille du canvas
 	zoom						//le zoom en cours
 	zooms = [1, 2, 5, 10]		//les zooms possibles

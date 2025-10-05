@@ -1,7 +1,8 @@
 import { Cosmos } from './cosmos.js'
 import { Telescop } from './telescop.js'
-const sfc = {}
-window.sfc = sfc
+import { Album } from './album.js'
+const sft = {}
+window.sft = sft
 
 //init
 document.addEventListener('DOMContentLoaded', (evt) => {
@@ -21,7 +22,6 @@ function initTabs() {
 			const url = new URL($btn.href)
 			const id = url.hash.replace('#', '')
 
-			console.log('open tab ' + id)
 			$btns.forEach($b => {
 				if($b == $btn)
 					$b.classList.add('on')
@@ -49,7 +49,7 @@ function initCanvas() {
 	window.addEventListener("resize", resizeCanvas)
 	
 	function resizeCanvas() {
-		console.log('resize')
+		console.log('resize canvas')
 		const $cosmos = Cosmos.$containers.canvas
 		
 		//pour forcer le retrecissement du parent
@@ -77,11 +77,11 @@ function loadJson() {
 	.then(res => res.json())
 	.then(output => {
 		console.log(output)
-		sfc.json = output
+		sft.json = output
 		
 		//contruction des instances
-		sfc.cosmos = new Cosmos(output.planets)
-		sfc.telescop = new Telescop(output.filters)
+		sft.cosmos = new Cosmos(output.planets)
+		sft.telescop = new Telescop(output.filters)
 
 		//load du level
 		loadLevel(0)
@@ -90,7 +90,8 @@ function loadJson() {
 
 //charger un level
 function loadLevel(i) {
-	const lvls = sfc.json.levels
+	const lvls = sft.json.levels
 	if(i < 0 || i >= lvls.length) throw new Error('impossible de trouver le level ' + i)
-	sfc.cosmos.loadLevel(lvls[i])
+	sft.cosmos.loadLevel(lvls[i])
+	sft.album = new Album(lvls[i].album)
 }
