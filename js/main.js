@@ -1,4 +1,5 @@
-import { Cosmos } from "./cosmos.js"
+import { Cosmos } from './cosmos.js'
+import { Telescop } from './telescop.js'
 const sfc = {}
 window.sfc = sfc
 
@@ -16,20 +17,24 @@ function initCanvas() {
 	
 	function resizeCanvas() {
 		console.log('resize')
-		const $canvases = document.querySelectorAll('#cosmos')
-		$canvases.forEach($canvas => {
-			//pour forcer le retrecissement du parent
-			$canvas.width = 0
-			$canvas.height = 0
-	
-			const $parent = $canvas.parentElement
-			$canvas.width = $parent.clientWidth
-			$canvas.height = $parent.clientHeight
-	
-			const detail = { width : $canvas.width, height: $canvas.height }
-			//$canvas.dispatchEvent(new CustomEvent('canvasResized', { detail: detail }))
-		})
+		const $cosmos = Cosmos.$containers.canvas
 		
+		//pour forcer le retrecissement du parent
+		$cosmos.width = 0
+		$cosmos.height = 0
+	
+		const $parent = $cosmos.parentElement
+		$cosmos.width = $parent.clientWidth
+		$cosmos.height = $parent.clientHeight
+
+		//recentrer le telescope
+		const $telescop = Telescop.$containers.canvas
+		$telescop.width = Telescop.canvasSize
+		$telescop.height = Telescop.canvasSize
+		const x = ($cosmos.width - $telescop.width) / 2
+		const y = ($cosmos.height - $telescop.height) / 2
+		$telescop.style.left = x + 'px'
+		$telescop.style.top = y + 'px'
 	}
 }
 
@@ -40,7 +45,12 @@ function loadJson() {
 	.then(output => {
 		console.log(output)
 		sfc.json = output
+		
+		//contruction des instances
 		sfc.cosmos = new Cosmos(output.planets)
+		sfc.telescop = new Telescop(output.filters)
+
+		//load du level
 		loadLevel(0)
 	})
 }

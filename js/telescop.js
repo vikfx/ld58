@@ -1,0 +1,174 @@
+import { Cosmos } from './cosmos.js'
+
+//telescope avec filtre et zoom 
+export class Telescop {
+	static canvasSize = 200		//taille du canvas
+	zoom						//le zoom en cours
+	zooms = [1, 2, 5]			//les zooms possibles
+	filters						//les filtres possibles
+	filter						//le filtre en cours
+	cosmos						//l'instance du cosmos
+
+	//init
+	constructor(filters) {
+		this.cosmos = Cosmos.instance
+		if(!cosmos) throw new Error('cosmos must be create before telescop')
+
+		this.initFilters(filters)
+		this.addListeners()
+
+		this.reset()
+	}
+
+	//reset du telescope
+	reset() {
+		this.filter = null
+		this.zoom = this.zooms[0]
+	}
+
+	//ajouter les ecouteurs
+	addListeners() {
+		document.addEventListener('cosmosTranslate', evt => {
+			this.posToHTML()
+			this.draw()
+			console.log('cosmos')
+			console.log(this.cosmos.bounds)
+			console.log('telescop')
+			console.log(this.bounds)
+		})
+	}
+	
+	//afficher les coordonnées dans la barre d'action
+	posToHTML() {
+		const angle = (p, size) =>  Math.floor(p * 360 / size).toString().padStart(3, '0')
+		let str = 'x ' + angle(this.center.x, this.cosmos.size.w)
+		str += '   y ' + angle(this.center.y, this.cosmos.size.h)
+		Telescop.$containers.pos.innerHTML = str
+	}
+
+	//creer les filtres
+	initFilters(filters) {
+		this.filters = filters
+		for(let f in filters) {
+			console.log(f)
+		}
+	}
+
+	//convertir les coordonnees pixel du canvas en position dans le telescope 
+	pixelToGrid(x, y) {
+		return {
+			x : Math.floor(x / this.zoom) + this.offset.x, 
+			y : Math.floor(y / this.zoom) + this.offset.y
+		}
+	}
+
+	//convertir la position x/y du telescope en coordonnées dans le canvas
+	gridToPixel(x, y) {
+		return {
+			x : (x - this.offset.x) * this.zoom,
+			y : (y - this.offset.y) * this.zoom
+		}
+	}
+
+	//cloisoner une position dans l'espace [0, size]
+	clampPos(x, y) {
+		const mod = (n, m) => ((n % m) + m) % m
+		return {
+			x: mod(x, this.cosmos.size.w),
+			y: mod(y, this.cosmos.size.h)
+		}
+	}
+
+	//centre de la camera telescope
+	get center() {
+		const b = this.cosmos.bounds
+		
+		return {
+			x : (b.left + b.width / 2) % this.cosmos.size.w,
+			y : (b.top + b.height / 2) % this.cosmos.size.h
+		}
+	}
+
+	//taille de la vision du telescope
+	get size() {
+		return Math.floor(Telescop.canvasSize / this.zoom)
+	}
+
+	//offset de la camera telescope
+	get offset() {
+		const x = Math.floor(this.center.x - this.size / 2)
+		const y = Math.floor(this.center.y - this.size / 2)
+		return this.clampPos(x, y)
+	}
+
+	//calcul du bounds du telescope
+	get bounds() {
+		const s = this.size
+		const o = this.offset
+		const rb = this.clampPos(o.x + s, o.y + s)
+
+		return {
+			left : o.x,
+			right : rb.x,
+			top : o.y,
+			bottom : rb.y,
+			width : this.size,
+			height : this.size
+		}
+	}
+
+	//dessiner dans le telescope
+	draw() {
+		const $canvas = Telescop.$containers.canvas
+		const ctx = $canvas.getContext('2d')
+	
+		//clear
+		ctx.clearRect(0, 0, $canvas.width, $canvas.height)
+	
+		//dessiner les planetes
+		const planets = Cosmos.getPlanetsInBounds(this.cosmos.planets, this.bounds)
+		planets.forEach(p => {
+			const s = p.size * this.zoom
+			
+			const pos = this.gridToPixel(p.position.x, p.position.y)
+			
+			if(pos.x > $canvas.width) pos.x -= this.cosmos.size.w * this.zoom
+			if(pos.x < 0) pos.x += this.cosmos.size.w * this.zoom
+			if(pos.y > $canvas.height) pos.y -= this.cosmos.size.h * this.zoom
+			if(pos.y < 0) pos.y += this.cosmos.size.h * this.zoom
+			
+			ctx.fillStyle = '#ffff00'
+			ctx.fillRect(pos.x - s / 2, pos.y - s / 2, s, s)
+		})
+	}
+	
+	//containers html
+	static get $containers() {
+		const $canvas = document.querySelector('#telescop canvas')
+		if(!$canvas) throw new Error('#telescop canvas not found')
+			
+		const $filters = document.querySelector('#filters')
+		if(!$filters) throw new Error('#filters ul not found')
+		
+		const $zoom = document.querySelector('#zoom')
+		if(!$zoom) throw new Error('#zoom button not found')
+		
+		const $pics = document.querySelector('#pics')
+		if(!$pics) throw new Error('#pics button not found')
+		
+		const $form = document.querySelector('#picture')
+		if(!$form) throw new Error('#picture modal not found')
+		
+		const $pos = document.querySelector('#position')
+		if(!$pos) throw new Error('#position  not found')
+
+		return {
+			canvas : $canvas,
+			filters : $filters,
+			zoom : $zoom,
+			pics : $pics,
+			modal : $form,
+			pos : $pos
+		}
+	}
+}

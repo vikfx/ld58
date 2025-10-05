@@ -1,9 +1,9 @@
-import { Planet } from "./planet.js"
+import { Planet } from './planet.js'
 
 //classe Cosmos pour abriter les planetes
 export class Cosmos {
-	zoom					//le zoom en cours
-	zooms = [1, 5, 10]		//les zooms possibles
+	static instance
+	zoom = 1				//le zoom en cours
 	sizes = [1, 5]			//les limites de taille de chaque planete à zoom 1
 	planetColor = '#ffffff'	//la couleur de la planete sans filtre
 	moveSpeed = 5			//la vitesse de deplacement
@@ -14,8 +14,11 @@ export class Cosmos {
 
 	//init
 	constructor(references) {
+		if(Cosmos.instance)	return Cosmos.instance
+		
 		this.references = references
 		this.addListeners()
+		Cosmos.instance = this
 	}
 
 	//ajouter les ecouteurs
@@ -57,7 +60,6 @@ export class Cosmos {
 			h : Number(level.cosmos.height)
 		}
 
-		this.zoom = this.zooms[0]
 		this.offset = this.clampPos(0, 0)
 		
 		this.planetsGeneration(level.planets)
@@ -96,15 +98,18 @@ export class Cosmos {
 		const x = this.offset.x + dirX * this.moveSpeed
 		const y = this.offset.y + dirY * this.moveSpeed
 		this.offset = this.clampPos(x, y)
+
+		const detail = { offset : this.offset }
+		document.dispatchEvent(new CustomEvent('cosmosTranslate', { detail: detail }))
 	}
 
 	//cloisoner une position dans l'espace [0, size]
 	clampPos(x, y) {
-		const mod = (n, m) => ((n % m) + m) % m;
+		const mod = (n, m) => ((n % m) + m) % m
 		return {
 			x: mod(x, this.size.w),
 			y: mod(y, this.size.h)
-		};
+		}
 	}
 
 	//convertir des coordonnées x/y dans le canvas en position dans le cosmos
@@ -134,8 +139,8 @@ export class Cosmos {
 			right : br.x,
 			top : this.offset.y,
 			bottom : br.y,
-			width : Math.abs(br.x - this.offset.x),
-			height : Math.abs(br.y - this.offset.y)
+			width : (br.x > this.offset.x) ? br.x - this.offset.x : this.size.w - Math.abs(br.x - this.offset.x),
+			height : (br.y > this.offset.y) ? br.y - this.offset.y : this.size.h - Math.abs(br.y - this.offset.y)
 		}
 	}
 
@@ -144,13 +149,13 @@ export class Cosmos {
 		return planets.filter(p => {
 			const inX = bounds.left <= bounds.right
 			? p.position.x >= bounds.left && p.position.x <= bounds.right
-			: p.position.x >= bounds.left || p.position.x <= bounds.right;
+			: p.position.x >= bounds.left || p.position.x <= bounds.right
 
 			const inY = bounds.top <= bounds.bottom
 			? p.position.y >= bounds.top && p.position.y <= bounds.bottom
-			: p.position.y >= bounds.top || p.position.y <= bounds.bottom;
+			: p.position.y >= bounds.top || p.position.y <= bounds.bottom
 
-			return inX && inY;
+			return inX && inY
 		})
 	}
 
@@ -163,7 +168,7 @@ export class Cosmos {
 		ctx.clearRect(0, 0, $canvas.width, $canvas.height)
 	
 		//dessiner les planetes
-		const planets = Cosmos.getPlanetsInBounds(this.planets, this.bounds, this.size, true)
+		const planets = Cosmos.getPlanetsInBounds(this.planets, this.bounds)
 		planets.forEach(p => {
 			const s = p.size * this.zoom
 			

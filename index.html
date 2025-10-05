@@ -25,30 +25,40 @@
 			<section id="tabs">
 				<div id="album" class="tab"></div>
 				<div id="dictionnary" class="tab"></div>
-				<div id="filters" class="tab"></div>
+				<div id="legend" class="tab"></div>
 			</section>
 		</aside>
 
 		<!-- MAIN -->
 		<main id="main-content">
-			<div id="infobar">
+			<div id="actions">
+				<ul id="filters">
+				</ul>
 				<ul id="tools">
-					<li id="filters">filters</li>
-					<li id="zoom">zoom</li>
-					<li id="pics">take a picture</li>
+					<li id="zoom" class="button">zoom</li>
+					<li id="pics" class="button">take a pic</li>
 				</ul>
-				<ul id="coordonnees">
-					<li id="pos-x">x 0000</li>
-					<li id="pos-y">y 0000</li>
-				</ul>
+				<p id="position">x 000 y 000</p>
 			</div>
 	
 			<canvas id="cosmos" class="on"></canvas>
-			<canvas id="telescop"></canvas>
+			<div id="telescop">
+				<canvas></canvas>
+				<ul class="reticle">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
 			<div id="help" class="modal"></div>
 			<form id="picture" class="modal">
+				<h3>Pic of your planet</h3>
+				<p>Do you want to collect planet in your album ?</p>
 				<img src="">
 				<input type="text" name="planet-name" placeholder="name of the planet">
+				<button action="ok">ok</button>
+				<button action="cancel">cancel</button>
 			</form>
 		</main>
 	</div>
