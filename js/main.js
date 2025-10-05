@@ -83,8 +83,29 @@ function loadJson() {
 		sft.cosmos = new Cosmos(output.planets)
 		sft.telescop = new Telescop(output.filters)
 
+		//init les levels
+		initLevels()
+
 		//load du level
 		loadLevel(0)
+	})
+}
+
+//init les boutons de chargement des levels
+function initLevels() {
+	const $ul = document.querySelector('#level-selector > ul')
+	if(!$ul) return
+	sft.json.levels.forEach((lvl, i) => {
+		const $li = document.createElement('li')
+		$li.classList.add('button')
+		$li.dataset.level = i
+		$li.innerHTML = lvl.name
+		$li.addEventListener('click', evt => {
+			const ok = confirm('would you load a new level ' + lvl.name + ' ?')
+			if(ok) loadLevel(i)	
+		})
+
+		$ul.appendChild($li)
 	})
 }
 
@@ -93,5 +114,5 @@ function loadLevel(i) {
 	const lvls = sft.json.levels
 	if(i < 0 || i >= lvls.length) throw new Error('impossible de trouver le level ' + i)
 	sft.cosmos.loadLevel(lvls[i])
-	sft.album = new Album(lvls[i].album)
+	sft.telescop.album = new Album(lvls[i].album)
 }

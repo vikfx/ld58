@@ -25,7 +25,7 @@
 	--space-small : 5px;
 	--space-medium : 10px;
 	--space-large : 20px;
-
+    --space--ultralarge : 100px; 
 	--main-height: calc(100vh - 53px);
 }
 
@@ -59,6 +59,11 @@ h4 {
 	font-size: 20px;
 }
 
+input, button {
+    font-size: 18px;
+    padding: var(--space-small);
+}
+
 /***** buttons *****/
 .button {
     width: 32px;
@@ -80,6 +85,12 @@ h4 {
     background-color: var(--color-accent2);
 }
 
+.buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-medium)
+}
+
 /*****
 HEADER
 *****/
@@ -89,6 +100,16 @@ HEADER
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+#level-selector {
+    display: flex;
+    align-items: baseline;
+}
+
+#level-selector .button {
+    width: auto;
+    padding: 0 var(--space-small);
 }
 
 /*****
@@ -261,7 +282,6 @@ MAIN
 #telescop canvas{
     background-color: #2226;
     border: solid 2px red;
-    /* border-radius: 50%; */
     transform: translate(-2px, -2px);
 }
 
@@ -324,14 +344,17 @@ MAIN
 MODAL
 *****/
 .modal {
-    display: block;
+    display: flex;
     position: fixed;
+    z-index: 100;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 30% 25%;
+    padding: var(--space--ultralarge);
     background-color: #000C;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal:not(.on) {
@@ -340,9 +363,14 @@ MODAL
 
 .modal-content {
 	display: flex;
-	justify-content: center;
-	align-items: stretch;
 	flex-direction: column;
-	padding: 20px 50px;
+	padding: var(--space-large);
+    gap: var(--space-medium);
 	background-color: var(--color-accent5);
+}
+
+.modal-content img {
+    aspect-ratio: 1;
+    width: 200px;
+    margin: auto;
 }

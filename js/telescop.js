@@ -1,5 +1,6 @@
 import { Cosmos } from './cosmos.js'
 import { Filter } from './filter.js'
+import { Popup } from './popup.js'
 
 //telescope avec filtre et zoom 
 export class Telescop {
@@ -8,9 +9,12 @@ export class Telescop {
 	zoom						//le zoom en cours
 	zooms = [1, 2, 5, 10]		//les zooms possibles
 	planetColor = '#333'		//la couleur de la planete sans filtre
+	searchTolerance	= 5			//tolérance de proximité de la planete avec l'objectif
 	filters						//les filtres possibles
 	filter						//le filtre en cours
 	cosmos						//l'instance du cosmos
+	album						//l'album en cours
+	popup						//la popup pour afficher la planete
 
 	//init
 	constructor(filters) {
@@ -20,15 +24,18 @@ export class Telescop {
 		this.cosmos = Cosmos.instance
 		if(!cosmos) throw new Error('cosmos must be create before telescop')
 
+		this.popup = new Popup()
+		
 		this.initFilters(filters)
 		this.addListeners()
-
+		
 		this.reset()
 	}
-
+	
 	//reset du telescope
 	reset() {
 		this.filter = null
+		this.album = null
 		this.setZoom(this.zooms[0])
 	}
 
@@ -48,6 +55,18 @@ export class Telescop {
 			if(zi >= this.zooms.length) zi = 0
 			this.setZoom(this.zooms[zi])
 		})
+
+		//bouton take a pic
+		Telescop.$containers.pic.addEventListener('click', evt => {
+			const planet = this.findNearestPlanet()
+			if(!planet)  {
+				alert('no planet found')
+				return
+			}
+
+			this.popup.populate(planet)
+			this.popup.open()
+		})
 	}
 
 	//definir un zoom
@@ -64,6 +83,33 @@ export class Telescop {
 		let str = 'x ' + angle(this.center.x, this.cosmos.size.w)
 		str += '   y ' + angle(this.center.y, this.cosmos.size.h)
 		Telescop.$containers.pos.innerHTML = str
+	}
+
+	//trouver la planete la plus proche
+	findNearestPlanet() {
+		const c = this.center
+		const planets = this.cosmos.planets.filter(p => {
+			const nearX = Math.abs(p.position.x - c.x) <= this.searchTolerance
+			const nearY = Math.abs(p.position.y - c.y) <= this.searchTolerance
+
+			return nearX && nearY
+		})
+
+		if(planets.length < 1 ) return
+		if(planets.length == 1) return planets[0]
+
+		let distance = this.searchTolerance * this.searchTolerance
+		let planet = null
+		planets.forEach(p => {
+			const x2 = Math.pow(p.position.x - c.x, 2)
+			const y2 = Math.pow(p.position.y - c.y, 2)
+			if(x2 + y2 < distance) {
+				planet = p
+				distance = x2 + y2
+			}
+		})
+
+		return planet
 	}
 
 	//creer les filtres
@@ -171,20 +217,20 @@ export class Telescop {
 		const $zoom = document.querySelector('#zoom')
 		if(!$zoom) throw new Error('#zoom button not found')
 		
-		const $pics = document.querySelector('#pics')
-		if(!$pics) throw new Error('#pics button not found')
-		
-		const $form = document.querySelector('#picture')
-		if(!$form) throw new Error('#picture modal not found')
+		const $pic = document.querySelector('#pic')
+		if(!$pic) throw new Error('#pic button not found')
 		
 		const $pos = document.querySelector('#position')
 		if(!$pos) throw new Error('#position  not found')
 
+		// const $form = document.querySelector('#picture')
+		// if(!$form) throw new Error('#picture modal not found')
+
 		return {
 			canvas : $canvas,
 			zoom : $zoom,
-			pics : $pics,
-			modal : $form,
+			pic : $pic,
+			//popup : $form,
 			pos : $pos
 		}
 	}

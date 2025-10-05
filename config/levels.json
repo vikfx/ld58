@@ -106,13 +106,34 @@
     ],
     "levels" : [
         {
+            "name" : "easy",
             "planets" : {
                 "M" : 80,
                 "J" : 60,
-                "R" : 30
+                "R" : 50
             },
             "cosmos" : {"width" : 1800, "height" : 1800},
-            "album" : ["M", "M", "J", "M", "R"]
+            "album" : ["M", "M", "J", "M", "R", "J"]
+        },
+        {
+            "name" : "normal",
+            "planets" : {
+                "M" : 100,
+                "J" : 150,
+                "R" : 50
+            },
+            "cosmos" : {"width" : 3000, "height" : 3000},
+            "album" : ["M", "M", "J", "M", "R", "M", "M", "J", "R", "R", "M", "J"]
+        },
+        {
+            "name" : "hard",
+            "planets" : {
+                "M" : 50,
+                "J" : 200,
+                "R" : 600
+            },
+            "cosmos" : {"width" : 3000, "height" : 3000},
+            "album" : ["M", "M", "J", "M", "R", "M", "J", "M", "J", "J", "R"]
         }
     ]
 }

@@ -8,6 +8,10 @@
 <body>
 	<header id="main-header">
 		<h1>Star Fleet Collector</h1>
+		<div id="level-selector">
+			<label>new game : </label>
+			<ul class="buttons-wrapper"></ul>
+		</div>
 		<a href="#help" title="help">help</a>
 	</header>
 	
@@ -48,7 +52,7 @@
 				<ul id="tools">
 					<li id="zoom" class="button">zoom</li>
 					<li id="speed" class="button">speed</li>
-					<li id="pics" class="button">take a pic</li>
+					<li id="pic" class="button">take a pic</li>
 				</ul>
 				<p id="position">x 000 y 000</p>
 			</div>
@@ -64,14 +68,18 @@
 				</ul>
 			</div>
 			<div id="help" class="modal"></div>
-			<form id="picture" class="modal">
-				<h3>Pic of your planet</h3>
-				<p>Do you want to collect planet in your album ?</p>
-				<img src="">
-				<input type="text" name="planet-name" placeholder="name of the planet">
-				<button action="ok">ok</button>
-				<button action="cancel">cancel</button>
-			</form>
+			<div  id="picture" class="modal">
+				<form class="modal-content">
+					<h3>Pic of your planet</h3>
+					<p>Do you want to collect this planet in your album ?</p>
+					<img src="">
+					<input type="text" name="planet-name" placeholder="name of the planet">
+					<div class="buttons-wrapper">
+						<button data-action="ok">ok</button>
+						<button data-action="cancel">cancel</button>
+					</div>
+				</form>
+			</div>
 		</main>
 	</div>
 

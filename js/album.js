@@ -6,11 +6,11 @@ export class Album {
 	constructor(album) {
 		this.album = album
 		this.collected = []
-		this.createHTML()
+		this.createCatalogHTML()
 	}
 
 	//creation du html
-	createHTML() {
+	createCatalogHTML() {
 		const $ul = Album.$containers.catalog
 		//supprimer les enfants
 		while($ul.firstChild) {
@@ -62,8 +62,6 @@ export class Album {
 		return [...Album.$containers.planets].find($p => $p.dataset.type == type && $p.dataset.planet == '')
 	}
 
-	
-
 	//containers html
 	static get $containers() {
 		const $catalog = document.querySelector('#album-tab .catalog')
@@ -73,9 +71,7 @@ export class Album {
 		
 		return {
 			catalog : $catalog,
-			planets : $planets
+			planets : $planets,
 		}
 	}
-
-
 }
