@@ -16,10 +16,10 @@ export class Cosmos {
 	//init
 	constructor(references) {
 		if(Cosmos.instance)	return Cosmos.instance
+		Cosmos.instance = this
 		
 		this.references = references
 		this.addListeners()
-		Cosmos.instance = this
 	}
 
 	//ajouter les ecouteurs

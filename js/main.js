@@ -7,10 +7,43 @@ window.sfc = sfc
 document.addEventListener('DOMContentLoaded', (evt) => {
 	console.log('hello main')
 
+	initTabs()
 	initCanvas()
 	loadJson()
 })
 
+//gerer les onglets
+function initTabs() {
+	const $btns = document.querySelectorAll('#tabs-nav a')
+	$btns.forEach(($btn, i) => {
+		$btn.addEventListener('click', (evt) => {
+			evt.preventDefault()
+			const url = new URL($btn.href)
+			const id = url.hash.replace('#', '')
+
+			console.log('open tab ' + id)
+			$btns.forEach($b => {
+				if($b == $btn)
+					$b.classList.add('on')
+				else
+					$b.classList.remove('on')
+			})
+
+			document.querySelectorAll('#tabs .tab').forEach($tab => {
+				if($tab.id == id + '-tab')
+					$tab.classList.add('on')
+				else
+					$tab.classList.remove('on')
+			})
+		})
+
+		if(i == 0) {
+			$btn.click()
+		}
+	})
+}
+
+//init le resize des canvas
 function initCanvas() {
 	resizeCanvas()
 	window.addEventListener("resize", resizeCanvas)

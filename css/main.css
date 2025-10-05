@@ -22,9 +22,9 @@
 	--button-padding: 5px;
 	--button-gap: 2px; */
 
-	--padding-small : 5px;
-	--padding-medium : 10px;
-	--padding-large : 20px;
+	--space-small : 5px;
+	--space-medium : 10px;
+	--space-large : 20px;
 
 	--main-height: calc(100vh - 53px);
 }
@@ -65,6 +65,7 @@ h4 {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .button:hover, .button.on {
@@ -80,7 +81,7 @@ h4 {
 HEADER
 *****/
 #main-header {
-	padding: var(--padding-small);
+	padding: var(--space-small);
 	background: var(--color-accent5);
 	display: flex;
 	justify-content: space-between;
@@ -94,7 +95,7 @@ FOOTER
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: var(--padding-medium) var(--padding-large);
+    padding: var(--space-medium) var(--space-large);
     text-align: right;
     color: #ffffff;
 }
@@ -117,7 +118,7 @@ ASIDE
 	color: var(--color-accent1);
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	max-height: var(--main-height);
 	width: 300px;
 }
@@ -129,16 +130,16 @@ ASIDE
 }
 
 #sidebar > header > nav {
-	padding: var(--padding-medium) var(--padding-large);
+	padding: var(--space-medium) var(--space-large);
 	padding-bottom: 0;
 	display: flex;
-	gap: var(--padding-small);
+	gap: var(--space-small);
 	/* border-bottom: var(--button-border); */
 }
 
 #sidebar > header > nav > a {
 	background-color: var(--color-accent1);
-	padding: var(--padding-small);
+	padding: var(--space-small);
 	/* margin-bottom: -2px; */
 	text-decoration: none;
 }
@@ -150,7 +151,7 @@ ASIDE
 
 /***** tabs *****/
 #tabs {
-	padding: var(--padding-small);
+	padding: var(--space-small);
 	overflow: auto;
 	/* border: solid 5px var(--color-accent2); */
 }
@@ -161,6 +162,24 @@ ASIDE
 
 #tabs .tab > * {
     margin-bottom: 20px;
+}
+
+/* filters */
+span.color {
+    display: block;
+    width: 25px;
+    height: 25px;
+}
+
+.attributes li {
+    display: flex;
+    align-items: center;
+}
+
+.attributes li label {
+    display: block;
+    width: 50%;
+    margin-left : var(--space-large)
 }
 
 /*****
@@ -236,7 +255,7 @@ MAIN
     left: 0;
     right: 0;
     display: flex;
-    padding: var(--padding-medium) var(--padding-large);
+    padding: var(--space-medium) var(--space-large);
     background-color: var(--color-accent4);
     justify-content: space-between;
     align-items: center;
@@ -245,7 +264,7 @@ MAIN
 
 #actions ul {
     display: flex;
-    gap: var(--padding-small);
+    gap: var(--space-small);
 }
 
 #position {
