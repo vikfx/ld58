@@ -32,7 +32,8 @@ export class Popup {
 		const $containers = Popup.$containers
 		
 		$containers.buttons.forEach($btn => {
-			$btn.addEventListener('click', evt => {		
+			$btn.addEventListener('click', evt => {
+				evt.preventDefault()
 				const album = Telescop.instance.album
 				if(!album) return
 
