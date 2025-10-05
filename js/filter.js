@@ -24,9 +24,9 @@ export class Filter {
 		const $li = document.createElement('li')
 		$li.classList.add('button')
 		$li.dataset.filter = this.name
-		$li.innerHTML = this.name
+		//$li.innerHTML = this.name
 		$li.title = this.name
-		$li.style.backgroundImage = this.src
+		$li.style.backgroundImage = 'url(' + this.src + ')'
 		$li.addEventListener('click', evt => {
 			this.setActive()
 		})

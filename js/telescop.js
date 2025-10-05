@@ -73,7 +73,7 @@ export class Telescop {
 	setZoom(z) {
 		this.zoom = z
 
-		Telescop.$containers.zoom.innerHTML = 'zoom x' + this.zoom
+		Telescop.$containers.zoom.innerHTML = 'x' + this.zoom
 		this.draw()
 	}
 	

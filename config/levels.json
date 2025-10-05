@@ -11,8 +11,8 @@
                 "size" : "medium"
             },
             "models" : [
-                "./planetM1.png",
-                "./planetM2.png"
+                "./images/planetM1.png",
+                "./images/planetM2.png"
             ]
         },
         {
@@ -26,8 +26,8 @@
                 "size" : "big"
             },
             "models" : [
-                "./planetJ1.png",
-                "./planetJ2.png"
+                "./images/planetJ1.png",
+                "./images/planetJ2.png"
             ]
         },
         {
@@ -41,15 +41,15 @@
                 "size" : "big"
             },
             "models" : [
-                "./planetR1.png",
-                "./planetR2.png"
+                "./images/planetR1.png",
+                "./images/planetR2.png"
             ]
         }
     ],
     "filters" : [
         {
             "name" : "water",
-            "button" : "./filterWater.png",
+            "button" : "./images/filterWater.png",
             "params" : {
                 "liquid" : "#00cccc",
                 "solid" : "#ccffff",
@@ -59,7 +59,7 @@
         },
         {
             "name" : "ground", 
-            "button" : "./filterGround.png",
+            "button" : "./images/filterGround.png",
             "params" : {
                 "azote" : "#00ff22",
                 "carbon" : "#666666",
@@ -68,7 +68,7 @@
         },
         {
             "name" : "atmosphere", 
-            "button" : "./filterAtmos.png",
+            "button" : "./images/filterAtmos.png",
             "params" : {
                 "oxygen" : "#ff1122",
                "azote" : "#00ff22",
@@ -78,7 +78,7 @@
         },
         {
             "name" : "star",
-            "button" : "./filterStar.png",
+            "button" : "./images/filterStar.png",
             "params" : {
                 "naine" : "#ff6600",
                 "nova" : "#ffffcc",
@@ -87,7 +87,7 @@
         },
         {
             "name" : "density",
-            "button" : "./filterDensity.png",
+            "button" : "./images/filterDensity.png",
             "params" : {
                 "low" : "#0055dd",
                 "medium" : "#cccc22",
@@ -96,7 +96,7 @@
         },
         {
             "name" : "size",
-            "button" : "./filterSize.png",
+            "button" : "./images/filterSize.png",
             "params" : {
                 "small" : "#22dddd",
                 "medium" : "#dd22aa",

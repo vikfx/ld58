@@ -335,6 +335,24 @@ MAIN
     gap: var(--space-small);
 }
 
+#actions #tools li {
+    text-align: right;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+#zoom {
+    background-image: url('../images/btnZoom.png');
+}
+
+#speed {
+    background-image: url('../images/btnSpeed.png');
+}
+
+#pic {
+    background-image: url('../images/btnCam.png');
+}
+
 #position {
     min-width: 200px;
     text-align: right;

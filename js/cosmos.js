@@ -83,7 +83,7 @@ export class Cosmos {
 	//definir la vitesse de balayage
 	setSpeed(s) {
 		this.speed = s
-		Cosmos.$containers.speed.innerHTML = 'speed x' + this.speed
+		Cosmos.$containers.speed.innerHTML = 'x' + this.speed
 	}
 
 	//generer des planetes
