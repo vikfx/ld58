@@ -144,7 +144,7 @@ ASIDE
 	flex-direction: column;
 	justify-content: flex-start;
 	max-height: var(--main-height);
-	width: 300px;
+	width: 100%;
 }
 
 /***** header *****/
@@ -249,6 +249,17 @@ span.color {
 #album-tab .box h4 {
     position: relative;
     z-index: 10;
+}
+
+/* help */
+#help-tab li {
+    padding-left: var(--space-small);
+    list-style-type: square;
+    list-style-position: outside;
+}
+
+#help-tab ul {
+    padding-left: var(--space-large);
 }
 
 /*****

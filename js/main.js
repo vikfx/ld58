@@ -36,10 +36,6 @@ function initTabs() {
 					$tab.classList.remove('on')
 			})
 		})
-
-		if(i == 0) {
-			$btn.click()
-		}
 	})
 }
 
